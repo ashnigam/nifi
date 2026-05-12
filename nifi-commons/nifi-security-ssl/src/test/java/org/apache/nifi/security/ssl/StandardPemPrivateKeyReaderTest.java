@@ -37,6 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.example.pqc.config.CryptoConfig;
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 class StandardPemPrivateKeyReaderTest {
 
     private static final String RSA_ALGORITHM = "RSA";
@@ -73,9 +76,8 @@ class StandardPemPrivateKeyReaderTest {
 
     @BeforeAll
     static void setPrivateKey() throws Exception {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(RSA_KEY_SIZE);
-        final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
+        // Note: KYBER does not require initialize() call
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();
 
@@ -151,9 +153,8 @@ class StandardPemPrivateKeyReaderTest {
     }
 
     static String getRsaPrivateKeyEncoded(final int keySize) throws GeneralSecurityException {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(keySize);
-        final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
+        // Note: KYBER does not require initialize() call
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();
         return getPrivateKeyPemEncoded(rsaPrivateKeyEncoded);
