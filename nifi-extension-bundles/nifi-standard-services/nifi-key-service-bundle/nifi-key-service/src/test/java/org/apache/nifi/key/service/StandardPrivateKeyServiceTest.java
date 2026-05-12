@@ -51,6 +51,9 @@ import static org.bouncycastle.openssl.jcajce.JceOpenSSLPKCS8EncryptorBuilder.DE
 import static org.bouncycastle.openssl.jcajce.JceOpenSSLPKCS8EncryptorBuilder.PBE_SHA1_3DES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 class StandardPrivateKeyServiceTest {
     private static final String SERVICE_ID = StandardPrivateKeyServiceTest.class.getSimpleName();
 
