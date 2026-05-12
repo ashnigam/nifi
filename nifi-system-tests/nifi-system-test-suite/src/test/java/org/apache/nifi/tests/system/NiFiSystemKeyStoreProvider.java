@@ -41,6 +41,9 @@ import java.util.List;
 import javax.net.ssl.SSLContext;
 import javax.security.auth.x500.X500Principal;
 
+import com.example.pqc.config.CryptoConfig;
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 /**
  * System Key Store Provider generates a Key Pair and Certificate for KeyStore and TrustStore files
  */
@@ -158,9 +161,8 @@ public class NiFiSystemKeyStoreProvider {
     }
 
     private static KeyPair getKeyPair() throws NoSuchAlgorithmException {
-        final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        keyPairGenerator.initialize(KEY_SIZE);
-        return keyPairGenerator.generateKeyPair();
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
+        // Note: KYBER does not require initialize() call
     }
 
     private static String generateProtectionParameter() {
