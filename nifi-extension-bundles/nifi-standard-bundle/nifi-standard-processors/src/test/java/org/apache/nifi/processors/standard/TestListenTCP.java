@@ -54,6 +54,9 @@ import javax.security.auth.x500.X500Principal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 public class TestListenTCP {
     private static final String CLIENT_CERTIFICATE_SUBJECT_DN_ATTRIBUTE = "client.certificate.subject.dn";
     private static final String CLIENT_CERTIFICATE_ISSUER_DN_ATTRIBUTE = "client.certificate.issuer.dn";
@@ -70,7 +73,7 @@ public class TestListenTCP {
 
     @BeforeAll
     public static void configureServices() throws Exception {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("KYBER", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, new X500Principal("CN=localhost"), Duration.ofHours(1)).build();
         final KeyStore keyStore = new EphemeralKeyStoreBuilder()
                 .addPrivateKeyEntry(new KeyStore.PrivateKeyEntry(keyPair.getPrivate(), new Certificate[]{certificate}))
