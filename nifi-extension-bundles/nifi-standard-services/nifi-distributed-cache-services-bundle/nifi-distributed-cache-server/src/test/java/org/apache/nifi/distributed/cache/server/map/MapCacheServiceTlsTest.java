@@ -51,6 +51,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 public class MapCacheServiceTlsTest {
 
     private static TestRunner runner = null;
@@ -107,7 +110,7 @@ public class MapCacheServiceTlsTest {
     }
 
     private static SSLContextProvider createSslContextService() throws NoSuchAlgorithmException {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("KYBER", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, new X500Principal("CN=localhost"), Duration.ofHours(1)).build();
         final KeyStore keyStore = new EphemeralKeyStoreBuilder()
                 .addPrivateKeyEntry(new KeyStore.PrivateKeyEntry(keyPair.getPrivate(), new Certificate[]{certificate}))
