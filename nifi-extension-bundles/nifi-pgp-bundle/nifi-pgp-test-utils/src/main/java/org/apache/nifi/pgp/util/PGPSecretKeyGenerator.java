@@ -47,6 +47,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Iterator;
 
+import com.example.pqc.config.CryptoConfig;
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 /**
  * Pretty Good Privacy Secret Key Generator utilities
  */
@@ -137,9 +141,8 @@ public class PGPSecretKeyGenerator {
     }
 
     private static PGPKeyPair getDsaKeyPair() throws NoSuchAlgorithmException, PGPException {
-        final KeyPairGenerator dsaKeyPairGenerator = KeyPairGenerator.getInstance(DSA_KEY_ALGORITHM);
-        dsaKeyPairGenerator.initialize(DSA_KEY_SIZE);
-        final KeyPair dsaKeyPair = dsaKeyPairGenerator.generateKeyPair();
+        KeyPairGenerator dsaKeyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
+        // Note: KYBER does not require initialize() call
         return getPgpKeyPair(dsaKeyPair, PGPPublicKey.DSA);
     }
 
