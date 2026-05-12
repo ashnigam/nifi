@@ -61,6 +61,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.example.pqc.config.CryptoConfig;
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 class PEMEncodedSSLContextProviderTest {
     private static final String RSA_ALGORITHM = "RSA";
 
@@ -102,9 +105,8 @@ class PEMEncodedSSLContextProviderTest {
 
     @BeforeAll
     static void setKeyCertificate() throws Exception {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(RSA_KEY_SIZE);
-        final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
+        // Note: KYBER does not require initialize() call
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();
         privateKeyPemEncoded = getPrivateKeyPemEncoded(rsaPrivateKeyEncoded);
