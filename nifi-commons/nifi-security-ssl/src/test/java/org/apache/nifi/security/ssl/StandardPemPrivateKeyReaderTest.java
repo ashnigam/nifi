@@ -37,6 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 class StandardPemPrivateKeyReaderTest {
 
     private static final String RSA_ALGORITHM = "RSA";
@@ -73,8 +75,8 @@ class StandardPemPrivateKeyReaderTest {
 
     @BeforeAll
     static void setPrivateKey() throws Exception {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(RSA_KEY_SIZE);
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+        // Note: DILITHIUM3 does not require initialize() call
         final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();
@@ -151,8 +153,8 @@ class StandardPemPrivateKeyReaderTest {
     }
 
     static String getRsaPrivateKeyEncoded(final int keySize) throws GeneralSecurityException {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(keySize);
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+        // Note: DILITHIUM3 does not require initialize() call
         final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();
