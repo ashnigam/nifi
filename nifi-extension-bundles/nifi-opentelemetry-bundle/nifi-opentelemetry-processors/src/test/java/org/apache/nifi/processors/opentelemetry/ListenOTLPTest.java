@@ -89,6 +89,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 @Timeout(15)
 @ExtendWith(MockitoExtension.class)
 class ListenOTLPTest {
