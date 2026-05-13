@@ -49,6 +49,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 class StandardRelyingPartyRegistrationRepositoryTest {
     private static final String METADATA_PATH = "/saml/sso-circle-meta.xml";
 
@@ -157,7 +160,7 @@ class StandardRelyingPartyRegistrationRepositoryTest {
     }
 
     private KeyStore getKeyStore() throws GeneralSecurityException {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("DILITHIUM3", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, new X500Principal("CN=localhost"), Duration.ofHours(1)).build();
         return new EphemeralKeyStoreBuilder()
                 .addPrivateKeyEntry(new KeyStore.PrivateKeyEntry(keyPair.getPrivate(), new Certificate[]{certificate}))
