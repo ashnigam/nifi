@@ -56,6 +56,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.security.auth.x500.X500Principal;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 /**
  * Standard implementation for application security generates Key Pair and Certificate when not configured
  */
@@ -259,12 +261,8 @@ public class SecurityApplicationPropertyHandler implements ApplicationPropertyHa
     private KeyPair generateKeyPair() {
         final KeyPairGenerator keyPairGenerator;
         try {
-            keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        } catch (final NoSuchAlgorithmException e) {
-            throw new IllegalStateException("Key Pair Algorithm not supported [%s]".formatted(KEY_ALGORITHM), e);
-        }
-
-        keyPairGenerator.initialize(KEY_SIZE);
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+            // Note: DILITHIUM3 does not require initialize() call
         return keyPairGenerator.generateKeyPair();
     }
 
