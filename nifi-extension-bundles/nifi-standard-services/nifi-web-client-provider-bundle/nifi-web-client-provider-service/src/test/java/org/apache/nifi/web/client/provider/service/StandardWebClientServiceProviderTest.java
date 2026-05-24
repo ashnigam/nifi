@@ -66,6 +66,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 @ExtendWith(MockitoExtension.class)
 class StandardWebClientServiceProviderTest {
     private static final String SERVICE_ID = StandardWebClientServiceProvider.class.getSimpleName();
@@ -114,7 +117,7 @@ class StandardWebClientServiceProviderTest {
 
     @BeforeAll
     static void setTlsConfiguration() throws Exception {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("DILITHIUM3", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, new X500Principal("CN=localhost"), Duration.ofHours(1)).build();
         final KeyStore keyStore = new EphemeralKeyStoreBuilder()
                 .addPrivateKeyEntry(new KeyStore.PrivateKeyEntry(keyPair.getPrivate(), new Certificate[]{certificate}))
