@@ -59,6 +59,9 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 class StandardServerProviderTest {
 
     private static final String RANDOM_PORT = "0";
@@ -103,7 +106,7 @@ class StandardServerProviderTest {
 
     @BeforeAll
     static void setConfiguration() throws Exception {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("DILITHIUM3", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, LOCALHOST_SUBJECT, Duration.ofHours(1))
                 .setDnsSubjectAlternativeNames(List.of(PUBLIC_HOST))
                 .build();
