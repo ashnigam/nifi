@@ -61,6 +61,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 class PEMEncodedSSLContextProviderTest {
     private static final String RSA_ALGORITHM = "RSA";
 
@@ -102,8 +104,8 @@ class PEMEncodedSSLContextProviderTest {
 
     @BeforeAll
     static void setKeyCertificate() throws Exception {
-        final KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-        rsaKeyPairGenerator.initialize(RSA_KEY_SIZE);
+        KeyPairGenerator rsaKeyPairGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+        // Note: DILITHIUM3 does not require initialize() call
         final KeyPair rsaKeyPair = rsaKeyPairGenerator.generateKeyPair();
         final PrivateKey rsaPrivateKey = rsaKeyPair.getPrivate();
         final byte[] rsaPrivateKeyEncoded = rsaPrivateKey.getEncoded();

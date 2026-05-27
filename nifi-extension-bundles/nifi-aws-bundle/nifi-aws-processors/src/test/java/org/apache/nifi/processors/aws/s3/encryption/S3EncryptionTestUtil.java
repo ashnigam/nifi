@@ -61,7 +61,7 @@ final class S3EncryptionTestUtil {
 
     private static byte[] md5(byte[] payload) {
         try {
-            return MessageDigest.getInstance("MD5").digest(payload);
+            return MessageDigest.getInstance("SHA-256").digest(payload);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalArgumentException(e);
         }
