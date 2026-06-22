@@ -120,7 +120,7 @@ final class ProducerLibraryDeaggregator {
 
     private static MessageDigest getMd5Digest() {
         try {
-            return MessageDigest.getInstance("MD5");
+            return MessageDigest.getInstance("SHA-256");
         } catch (final NoSuchAlgorithmException e) {
             throw new IllegalStateException("MD5 algorithm not available", e);
         }

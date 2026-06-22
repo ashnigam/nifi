@@ -45,6 +45,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 class ApplicationServerConnectorFactoryTest {
 
     private static final String SSL_PROTOCOL = "ssl";
@@ -74,7 +77,7 @@ class ApplicationServerConnectorFactoryTest {
 
     @BeforeAll
     static void setConfiguration() throws Exception {
-        final KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
+        final KeyPair keyPair = KeyPairGenerator.getInstance("KYBER", "BC").generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, new X500Principal("CN=localhost"), Duration.ofHours(1)).build();
         final KeyStore keyStore = new EphemeralKeyStoreBuilder().build();
         keyStore.setKeyEntry(ALIAS, keyPair.getPrivate(), KEY_STORE_PASS.toCharArray(), new Certificate[]{certificate});

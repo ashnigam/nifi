@@ -55,6 +55,9 @@ import static org.apache.nifi.graph.Neo4JCypherClientService.SSL_TRUST_STORE_FIL
 import static org.apache.nifi.graph.Neo4JCypherClientService.USERNAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+
 public class ITNeo4JCypherClientServiceSSL {
     private static final String ADMIN_USER = "neo4j";
 
@@ -149,7 +152,7 @@ public class ITNeo4JCypherClientServiceSSL {
     }
 
     private static void setCertificatePrivateKey() throws Exception {
-        final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("KYBER", "BC");
         final KeyPair keyPair = keyPairGenerator.generateKeyPair();
         final X509Certificate certificate = new StandardCertificateBuilder(keyPair, CERTIFICATE_ISSUER, Duration.ofDays(1))
                 .setDnsSubjectAlternativeNames(DNS_NAMES)

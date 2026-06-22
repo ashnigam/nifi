@@ -36,6 +36,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 /**
  * RSA Private Key Authorization Provider implementing Snowflake JSON Web Token with RS256
  */
